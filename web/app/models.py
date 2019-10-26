@@ -12,11 +12,9 @@ class User(db.Model, UserMixin):
 
     first_name = db.Column(db.String)
     last_name = db.Column(db.String)
-    phone = db.Column(db.String)
     email = db.Column(db.String, primary_key=True)
-    confirmation = db.Column(db.Boolean)
-    paid = db.Column(db.Boolean)
     _password = db.Column(db.String)
+    confirmation = db.Column(db.Boolean)
 
     @property
     def full_name(self):
@@ -39,11 +37,14 @@ class User(db.Model, UserMixin):
     def is_paid(self):
         return self.paid
 
-class Table(db.Model, UserMixin):
+class Transaction(db.Model, UserMixin):
 
     ''' A Table who has an account on the website. '''
 
-    table_name = db.Column(uuid4(), primary_key=True)
+    __tablename__ = 'tables'
+    transaction_id = db.Column(db.String, primary_key=True)
+    table_id = db.Column(db.String)
     server_name = db.Column(db.String)
-    phone = db.Column(db.String)
-    paid = db.Column(db.Boolean)
+    current_order = db.Column(db.String)
+    served_time = db.Column(db.String)
+    

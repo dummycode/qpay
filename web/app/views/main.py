@@ -1,12 +1,30 @@
 from flask import render_template, jsonify
 from app import app
 import random
+import datetime
+from app import app, models, db
+from app.forms import transaction as transaction_forms
+from flask import (Blueprint, render_template, redirect, request, url_for,
+                   abort, flash)
+import uuid
 
 
-@app.route('/')
-@app.route('/index')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html', title='Home')
+    form = transaction_forms.TransactionInfo()
+    if form.validate_on_submit():
+        table = models.Transaction(
+                transaction_id = str(uuid.uuid4()),
+                table_id = form.table_id.data,
+                server_name = form.server_name.data,
+                served_time = str(datetime.datetime.now()),
+                current_order = str(form.order.data)
+            )
+        db.session.add(table)
+        db.session.commit()
+        flash('The check has been sent', 'positive')
+    return render_template('index.html', form=form, title='Home')
 
 
 @app.route('/map')

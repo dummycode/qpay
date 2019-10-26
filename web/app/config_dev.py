@@ -5,7 +5,7 @@ from app.config_common import *
 
 # DEBUG can only be set to True in a development environment for security reasons
 DEBUG = True
-
+DEBUG_TB_INTERCEPT_REDIRECTS = False
 # Secret key for generating tokens
 SECRET_KEY = 'houdini'
 

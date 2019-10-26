@@ -6,10 +6,20 @@
 
 {% block content %}
 
-	<h1 class="ui header">{{ title }}</h1>
+	<h1 class="ui header">Qpay {{ title }}</h1>
 
 	{% if current_user.is_authenticated %}
-	  	<h2 class="ui header">Hi {{ current_user.first_name }}!</h2>
+		  <h2 class="ui header">Hi {{ current_user.first_name }}!</h2>
+		  <div class="ui form-user center raised very padded text container segment">
+			<form class="ui form" action="" method="post">
+				<h4 class="ui dividing header">Input Order</h4>
+				{{ m.render_field(form.table_id) }}
+				{{ m.render_field(form.server_name) }}
+				{{ m.render_field(form.order) }}
+				  {{ form.csrf_token }}
+			</form>
+			<button class="ui primary button" align="center" type="submit">Send Bill</button>
+		</div>
 	{% endif %}
 
 {% endblock %}

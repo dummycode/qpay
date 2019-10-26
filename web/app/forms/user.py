@@ -1,5 +1,5 @@
 from flask.ext.wtf import Form
-from wtforms import TextField, PasswordField
+from wtforms import TextField, PasswordField, DateTimeField, FieldList
 from wtforms.validators import (Required, Length, Email, ValidationError,
                                 EqualTo)
 from app.models import User
@@ -64,8 +64,6 @@ class SignUp(Form):
                      description='Name')
     last_name = TextField(validators=[Required(), Length(min=2)],
                         description='Surname')
-    phone = TextField(validators=[Required(), Length(min=6)],
-                      description='Phone number')
     email = TextField(validators=[Required(), Email(),
                                   Unique(User, User.email,
                                          'This email address is ' +
@@ -76,3 +74,5 @@ class SignUp(Form):
         EqualTo('confirm', message='Passwords must match.')
     ], description='Password')
     confirm = PasswordField(description='Confirm password')
+
+    
