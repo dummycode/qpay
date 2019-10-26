@@ -15,7 +15,21 @@ import { MonoText } from '../components/StyledText'
 import QRCamera from '../components/QRCamera'
 
 export default class HomeScreen extends React.Component {
+  handleQrSuccess(data) {
+    Alert.alert('QR Read', data)
+    console.log(this.props.navigation)
+    this.props.navigation.navigate('Settings')
+  }
+
+  handleTestPress() {
+    console.log('Test pressed')
+    console.log(this.props.navigation)
+    this.props.navigation.push('Receipt')
+    this.props.navigation.navigate('Receipt')
+  }
+
   render() {
+    console.log(this.props)
     return (
       <View style={styles.container}>
         <ScrollView
@@ -34,8 +48,19 @@ export default class HomeScreen extends React.Component {
           </View>
 
           <View style={styles.cameraContainer}>
-            <QRCamera onQrSuccess={handleQrSuccess}></QRCamera>
+            <QRCamera
+              onQrSuccess={(data) => this.handleQrSuccess(data)}
+            ></QRCamera>
             <Text style={styles.bodyText}>Scan QR code to pay</Text>
+          </View>
+
+          <View style={styles.helpContainer}>
+            <TouchableOpacity
+              onPress={() => this.handleTestPress()}
+              style={styles.helpLink}
+            >
+              <Text style={styles.bodyText}>Test</Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </View>
@@ -68,10 +93,6 @@ function DevelopmentModeNotice() {
       </Text>
     )
   }
-}
-
-function handleQrSuccess(data) {
-  Alert.alert('QR Read', data)
 }
 
 const styles = StyleSheet.create({

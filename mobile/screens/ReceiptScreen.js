@@ -1,27 +1,55 @@
 import React from 'react'
-import { ScrollView, StyleSheet } from 'react-native'
-import { ExpoLinksView } from '@expo/samples'
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 
-export default function ReceiptScreen() {
-  return (
-    <ScrollView style={styles.container}>
-      {/**
-       * Go ahead and delete ExpoLinksView and replace it with your content;
-       * we just wanted to provide you with some helpful links.
-       */}
-      <ExpoLinksView />
-    </ScrollView>
-  )
+import PdfView from '../components/PdfView'
+
+export default class ReceiptScreen extends React.Component {
+  state = {
+    source: {
+      uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
+      cache: false,
+    },
+  }
+  async componentDidMount() {
+    // Get receipt data
+    console.log('Receipt screen loaded')
+
+    const source = {
+      uri: 'https://henryharr.is',
+      cache: false,
+    }
+
+    this.setState({ source })
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text>Receipt</Text>
+        <PdfView source={this.state.source}></PdfView>
+      </View>
+    )
+  }
 }
 
 ReceiptScreen.navigationOptions = {
-  title: 'Links',
+  header: 'Receipt',
+}
+
+ReceiptScreen.navigationOptions = {
+  title: 'Home',
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 15,
+    paddingTop: 30,
     backgroundColor: '#fff',
   },
 })
