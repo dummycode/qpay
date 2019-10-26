@@ -1,12 +1,12 @@
 from sqlalchemy.ext.hybrid import hybrid_property
 from flask.ext.login import UserMixin
-
+from uuid import uuid4
 from app import db, bcrypt
 
 
 class User(db.Model, UserMixin):
 
-    ''' A user who has an account on the website. '''
+    ''' A resteraunt owner who has an account on the website. '''
 
     __tablename__ = 'users'
 
@@ -39,3 +39,11 @@ class User(db.Model, UserMixin):
     def is_paid(self):
         return self.paid
 
+class Table(db.Model, UserMixin):
+
+    ''' A Table who has an account on the website. '''
+
+    table_name = db.Column(uuid4(), primary_key=True)
+    server_name = db.Column(db.String)
+    phone = db.Column(db.String)
+    paid = db.Column(db.Boolean)
