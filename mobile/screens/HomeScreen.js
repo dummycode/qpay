@@ -1,5 +1,5 @@
-import * as WebBrowser from 'expo-web-browser';
-import React from 'react';
+import * as WebBrowser from 'expo-web-browser'
+import React from 'react'
 import {
   Image,
   Platform,
@@ -8,16 +8,23 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from 'react-native';
+} from 'react-native'
 
-import { MonoText } from '../components/StyledText';
+import { MonoText } from '../components/StyledText'
 
 export default function HomeScreen() {
   return (
     <View style={styles.container}>
+      <View style={styles.helpContainer}>
+        <TouchableOpacity onPress={handlePayPress} style={styles.helpLink}>
+          <Text style={styles.helpLinkText}>Pay!</Text>
+        </TouchableOpacity>
+      </View>
+
       <ScrollView
         style={styles.container}
-        contentContainerStyle={styles.contentContainer}>
+        contentContainerStyle={styles.contentContainer}
+      >
         <View style={styles.welcomeContainer}>
           <Image
             source={
@@ -30,25 +37,16 @@ export default function HomeScreen() {
         </View>
 
         <View style={styles.getStartedContainer}>
-          <DevelopmentModeNotice />
-
-          <Text style={styles.getStartedText}>Get started by opening</Text>
-
           <View
-            style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-            <MonoText>screens/HomeScreen.js</MonoText>
+            style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
+          >
+            <Text style={styles.bodyText}>qpay</Text>
           </View>
-
-          <Text style={styles.getStartedText}>
-            Change this text and your app will automatically reload.
-          </Text>
         </View>
 
         <View style={styles.helpContainer}>
-          <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
-            <Text style={styles.helpLinkText}>
-              Help, it didn’t automatically reload!
-            </Text>
+          <TouchableOpacity onPress={handlePayPress} style={styles.helpLink}>
+            <Text style={styles.helpLinkText}>Pay!</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -59,19 +57,20 @@ export default function HomeScreen() {
         </Text>
 
         <View
-          style={[styles.codeHighlightContainer, styles.navigationFilename]}>
+          style={[styles.codeHighlightContainer, styles.navigationFilename]}
+        >
           <MonoText style={styles.codeHighlightText}>
             navigation/MainTabNavigator.js
           </MonoText>
         </View>
       </View>
     </View>
-  );
+  )
 }
 
 HomeScreen.navigationOptions = {
   header: null,
-};
+}
 
 function DevelopmentModeNotice() {
   if (__DEV__) {
@@ -79,33 +78,38 @@ function DevelopmentModeNotice() {
       <Text onPress={handleLearnMorePress} style={styles.helpLinkText}>
         Learn more
       </Text>
-    );
+    )
 
     return (
       <Text style={styles.developmentModeText}>
         Development mode is enabled: your app will be slower but you can use
         useful development tools. {learnMoreButton}
       </Text>
-    );
+    )
   } else {
     return (
       <Text style={styles.developmentModeText}>
         You are not in development mode: your app will run at full speed.
       </Text>
-    );
+    )
   }
 }
 
 function handleLearnMorePress() {
   WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/versions/latest/workflow/development-mode/'
-  );
+    'https://docs.expo.io/versions/latest/workflow/development-mode/',
+  )
 }
 
 function handleHelpPress() {
+  // Scan camera
   WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/versions/latest/workflow/up-and-running/#cant-see-your-changes'
-  );
+    'https://docs.expo.io/versions/latest/workflow/up-and-running/#cant-see-your-changes',
+  )
+}
+
+function handlePayPress() {
+  console.log('Press')
 }
 
 const styles = StyleSheet.create({
@@ -113,7 +117,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  developmentModeText: {
+  largeBodyText: {
     marginBottom: 20,
     color: 'rgba(0,0,0,0.4)',
     fontSize: 14,
@@ -150,7 +154,7 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     paddingHorizontal: 4,
   },
-  getStartedText: {
+  bodyText: {
     fontSize: 17,
     color: 'rgba(96,100,109, 1)',
     lineHeight: 24,
@@ -195,4 +199,4 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#2e78b7',
   },
-});
+})
