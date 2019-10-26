@@ -8,64 +8,39 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Alert,
 } from 'react-native'
 
 import { MonoText } from '../components/StyledText'
+import QRCamera from '../components/QRCamera'
 
-export default function HomeScreen() {
-  return (
-    <View style={styles.container}>
-      <View style={styles.helpContainer}>
-        <TouchableOpacity onPress={handlePayPress} style={styles.helpLink}>
-          <Text style={styles.helpLinkText}>Pay!</Text>
-        </TouchableOpacity>
-      </View>
-
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}
-      >
-        <View style={styles.welcomeContainer}>
-          <Image
-            source={
-              __DEV__
-                ? require('../assets/images/robot-dev.png')
-                : require('../assets/images/robot-prod.png')
-            }
-            style={styles.welcomeImage}
-          />
-        </View>
-
-        <View style={styles.getStartedContainer}>
-          <View
-            style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
-          >
-            <Text style={styles.bodyText}>qpay</Text>
-          </View>
-        </View>
-
-        <View style={styles.helpContainer}>
-          <TouchableOpacity onPress={handlePayPress} style={styles.helpLink}>
-            <Text style={styles.helpLinkText}>Pay!</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-
-      <View style={styles.tabBarInfoContainer}>
-        <Text style={styles.tabBarInfoText}>
-          This is a tab bar. You can edit it in:
-        </Text>
-
-        <View
-          style={[styles.codeHighlightContainer, styles.navigationFilename]}
+export default class HomeScreen extends React.Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.contentContainer}
         >
-          <MonoText style={styles.codeHighlightText}>
-            navigation/MainTabNavigator.js
-          </MonoText>
-        </View>
+          <View style={styles.welcomeContainer}>
+            <Image
+              source={
+                __DEV__
+                  ? require('../assets/images/robot-dev.png')
+                  : require('../assets/images/robot-prod.png')
+              }
+              style={styles.welcomeImage}
+            />
+          </View>
+
+          <View style={styles.cameraContainer}>
+            <QRCamera onQrSuccess={handleQrSuccess}></QRCamera>
+            <Text style={styles.bodyText}>Scan QR code to pay</Text>
+          </View>
+        </ScrollView>
       </View>
-    </View>
-  )
+    )
+  }
 }
 
 HomeScreen.navigationOptions = {
@@ -95,21 +70,8 @@ function DevelopmentModeNotice() {
   }
 }
 
-function handleLearnMorePress() {
-  WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/versions/latest/workflow/development-mode/',
-  )
-}
-
-function handleHelpPress() {
-  // Scan camera
-  WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/versions/latest/workflow/up-and-running/#cant-see-your-changes',
-  )
-}
-
-function handlePayPress() {
-  console.log('Press')
+function handleQrSuccess(data) {
+  Alert.alert('QR Read', data)
 }
 
 const styles = StyleSheet.create({
@@ -159,6 +121,7 @@ const styles = StyleSheet.create({
     color: 'rgba(96,100,109, 1)',
     lineHeight: 24,
     textAlign: 'center',
+    marginTop: 10,
   },
   tabBarInfoContainer: {
     position: 'absolute',
@@ -198,5 +161,10 @@ const styles = StyleSheet.create({
   helpLinkText: {
     fontSize: 14,
     color: '#2e78b7',
+  },
+  cameraContainer: {
+    alignItems: 'center',
+    marginTop: 10,
+    marginBottom: 20,
   },
 })
