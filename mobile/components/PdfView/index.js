@@ -6,7 +6,6 @@ export default class PdfView extends React.Component {
   async componentDidMount() {}
 
   render() {
-    console.log(this.props.source)
     return (
       <View style={styles.container}>
         <WebView source={this.props.source} />
